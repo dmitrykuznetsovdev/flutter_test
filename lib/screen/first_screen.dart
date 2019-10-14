@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-var styleContainer = BoxDecoration(
+final styleContainer = BoxDecoration(
   color: Colors.blue[500],
   gradient: new LinearGradient(
     colors: [Colors.red, Colors.cyan],
