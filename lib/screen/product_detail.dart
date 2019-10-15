@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screen/second_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   @override
@@ -11,9 +12,7 @@ class ProductDetailScreen extends StatelessWidget {
         appBar: AppBar(title: Text(args.title)),
         body: Container(
           width: double.infinity,
-          decoration: BoxDecoration(color: Colors.red),
-          padding: EdgeInsets.all(5),
-          child: _card(args)
+          child: args.message == '85 W Portal Ave' ? _card2(args, context) : _card(args)
         ));
   }
 }
@@ -31,6 +30,66 @@ Container _card(ScreenArguments args) => Container(
         children: <Widget>[
           _imageCard(),
           _textCardComponent(args),
+        ],
+      ),
+    )
+);
+
+Container _card2(ScreenArguments args, BuildContext context) => Container(
+    child: Container(
+      margin: EdgeInsets.all(24),
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        border: Border.all(width: 1, color: Colors.black26),
+        borderRadius: BorderRadius.all(Radius.circular(6)),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(color: Colors.black12, blurRadius: 6)
+        ]
+      ),
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Container(
+            height: 200,
+            color: Colors.purple,
+            child: Icon(FontAwesomeIcons.kissWinkHeart),
+            margin: EdgeInsets.only(bottom: 20),
+          ),
+          Text(
+              'Flutter',
+              style: TextStyle(color: Colors.black26, fontSize: 40)
+          ),
+          Text(
+              'Learn how to align, position, and build layouts in Flutter with comparisons to CSS flexbox 💪📦 - they have more in common than you might think https://fireship.io/lessons/flutter-w...',
+              style: TextStyle(color: Colors.black26)
+          ),
+
+          Container(
+            margin: EdgeInsets.only(top: 25),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FlatButton(
+                    child: Text('click me'),
+                    color: Colors.cyanAccent,
+                  onPressed: () => {},
+                ),
+                FlatButton(
+                  child: Text('click me'),
+                  color: Colors.cyanAccent,
+                  onPressed: () => {},
+                ),
+                FlatButton(
+                  child: Text('click me'),
+                  color: Colors.cyanAccent,
+                  onPressed: () => {},
+                ),
+              ],
+            ),
+          )
         ],
       ),
     )
