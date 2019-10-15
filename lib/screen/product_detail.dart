@@ -11,44 +11,72 @@ class ProductDetailScreen extends StatelessWidget {
         appBar: AppBar(title: Text(args.title)),
         body: Container(
           width: double.infinity,
-          height: 250,
           decoration: BoxDecoration(color: Colors.red),
+          padding: EdgeInsets.all(5),
           child: _card(args)
         ));
   }
 }
 
-Card _card(ScreenArguments args) => Card(
-    color: Colors.white,
-    child: Padding(
-      padding: const EdgeInsets.all(20.0),
+Container _card(ScreenArguments args) => Container(
+    color: Colors.black,
+    child: Container(
+      margin: EdgeInsets.all(20),
+      // alignment: Alignment.center,
+      height: 100,
+      color: Colors.green,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           _imageCard(),
-          _textCard(args)
+          _textCardComponent(args),
         ],
       ),
     )
 );
 
-ClipRRect _imageCard() => ClipRRect(
-  borderRadius: BorderRadius.circular(10),
-  child: Stack(
-    children: <Widget>[
-      Center(child: CircularProgressIndicator()),
-      FadeInImage.assetNetwork(
-        placeholder: 'assets/images/loading.gif',
-        image:
-        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
-        fit: BoxFit.cover,
-      )
-    ],
-  ),
+Container _imageCard() => Container(
+  width: 100,
+  height: 100,
+  child: ClipRRect(
+    borderRadius: BorderRadius.circular(10),
+    child: Stack(
+      children: <Widget>[
+        // Center(child: CircularProgressIndicator()),
+        FadeInImage.assetNetwork(
+          placeholder: 'assets/images/loading.gif',
+          image:
+          'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
+          fit: BoxFit.cover,
+        )
+      ],
+    ),
+  )
 );
 
-Center _textCard(ScreenArguments args) => Center(
-  child: Text(
-    args.message,
-    style: TextStyle(color: Colors.black),
-  ),
+Expanded _textCardComponent(ScreenArguments args) => Expanded(
+  flex: 1,
+  child: Container(
+      padding: EdgeInsets.only(left: 10),
+      color: Colors.red,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            args.message,
+            style: TextStyle(color: Colors.black),
+          ),
+          Text(
+            args.message,
+            style: TextStyle(color: Colors.black),
+          ),
+          Text(
+            args.message,
+            style: TextStyle(color: Colors.black),
+          ),
+        ],
+      )
+  )
 );
