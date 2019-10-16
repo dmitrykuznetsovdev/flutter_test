@@ -32,36 +32,54 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  List<Map> buttonList = [
+    {
+      'title': 'list',
+      'url': '/list',
+    },
+    {
+      'title': 'bar',
+      'url': '/bar',
+    }
+  ];
+
+  TextStyle _textStyle = TextStyle(
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+    fontSize: 20,
+  );
+
+  Widget _text(String text) => Text(
+      text,
+      style: _textStyle
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 30
+      body: Container(
+        padding: EdgeInsets.all(10),
+        color: Colors.black12,
+        child: ListView(
+            children: <Widget>[
+              RaisedButton(
+                color: Colors.lightBlue,
+                child: this._text('Forms'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/forms');
+                },
               ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          this._incrementCounter();
-          Navigator.pushNamed(context, '/first');
-        },
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+              RaisedButton(
+                color: Colors.lightBlue,
+                child: this._text('List'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/list');
+                },
+              )
+            ]),
       ),
     );
   }

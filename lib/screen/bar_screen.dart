@@ -13,7 +13,7 @@ final styleContainer = BoxDecoration(
   ),
 );
 
-class FirstScreen extends StatelessWidget {
+class BarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

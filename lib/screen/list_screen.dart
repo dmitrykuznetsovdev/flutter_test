@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 const double kColorItemHeight = 48.0;
 
-class SecondScreen extends StatelessWidget {
+class ListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

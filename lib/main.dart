@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screen/home.dart';
-import 'package:flutter_app/screen/first_screen.dart';
-import 'package:flutter_app/screen/second_screen.dart';
+import 'package:flutter_app/screen/bar_screen.dart';
+import 'package:flutter_app/screen/list_screen.dart';
 import 'package:flutter_app/screen/product_detail.dart';
+import 'package:flutter_app/screen/forms.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,12 +18,13 @@ class MyApp extends StatelessWidget {
           body1: TextStyle(color: Colors.lightBlue),
         ),
       ),
-      initialRoute: "/second",
+      initialRoute: "/",
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => MyHomePage(title: 'My home page'),
-        '/first': (BuildContext context) => FirstScreen(),
-        '/second': (BuildContext context) => SecondScreen(),
+        '/bar': (BuildContext context) => BarScreen(),
+        '/list': (BuildContext context) => ListScreen(),
         '/detail': (BuildContext context) => ProductDetailScreen(),
+        '/forms': (BuildContext context) => FormsScreen(),
       }
     );
   }
