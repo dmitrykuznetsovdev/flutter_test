@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class FormsScreen extends StatefulWidget {
   FormsScreen({Key key, this.title}) : super(key: key);
@@ -11,122 +13,162 @@ class FormsScreen extends StatefulWidget {
 }
 
 class _FormsState extends State<FormsScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _user = User();
 
   void onSavedFormField(String val, String fieldName) {
     setState(() => _user.data[fieldName] = val);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Form validation demo'),
-        ),
-        body: Container(
-          color: Colors.green[500],
-          padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-          child: Builder(
-              builder: (context) => Form(
-                    key: _formKey,
-                    child: _containerForm(context),
-                  )),
-        ));
+  void submit() {
+    final form = _formKey.currentState;
+    // Validate returns true if the form is valid, otherwise false.
+    if (form.validate()) {
+      // If the form is valid, display a snackbar. In the real world,
+      // you'd often call a server or save the information in a database.
+
+      form.save();
+      _user.save();
+
+      Scaffold.of(context)
+          .showSnackBar(SnackBar(content: Text('Processing Data')));
+    }
   }
 
-  Container _containerForm(BuildContext context) => Container(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.only(bottom: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Expanded(
-                      child: TextFormField(
-                        decoration: InputDecoration(labelText: 'First name'),
-                        onSaved: (val) => onSavedFormField(val, 'firstName'),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                      ),
+  @override
+  Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Form validation demo'),
+      ),
+      body: Container(
+          padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+          child: FormBuilder(
+              key: _formKey,
+              initialValue: {
+                'date': DateTime.now(),
+                'accept_terms': false,
+              },
+              onChanged: (fields) {
+                // print(fields);
+              },
+              autovalidate: true,
+              child: ListView(children: <Widget>[
+                FormBuilderDateTimePicker(
+                  attribute: "date",
+                  style: TextStyle(color: Colors.black),
+                  inputType: InputType.date,
+                  format: DateFormat("yyyy-MM-dd"),
+                  decoration:
+                  InputDecoration(labelText: "Appointment Time"),
+                ),
+                FormBuilderSlider(
+                  attribute: "slider",
+                  validators: [FormBuilderValidators.min(6)],
+                  min: 0.0,
+                  max: 10.0,
+                  initialValue: 1.0,
+                  divisions: 20,
+                  decoration:
+                  InputDecoration(labelText: "Number of things"),
+                ),
+                FormBuilderCheckbox(
+                  attribute: 'accept_terms',
+                  label: Text(
+                      "I have read and agree to the terms and conditions",
+                      style: TextStyle(color: Colors.black),
+                  ),
+                  validators: [
+                    FormBuilderValidators.requiredTrue(
+                      errorText:
+                      "You must accept terms and conditions to continue",
                     ),
-                    Expanded(
-                      child: TextFormField(
-                        decoration: InputDecoration(labelText: 'Last name'),
-                        onSaved: (val) => onSavedFormField(val, 'lastName'),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                      ),
-                    )
                   ],
                 ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.only(bottom: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Expanded(
-                      child: TextFormField(
-                        decoration: InputDecoration(labelText: 'Phone'),
-                        onSaved: (val) => onSavedFormField(val, 'phone'),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        decoration: InputDecoration(labelText: 'Email'),
-                        onSaved: (val) => onSavedFormField(val, 'email'),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                      ),
-                    )
+                FormBuilderDropdown(
+                  style: TextStyle(color: Colors.black),
+                  attribute: "gender",
+                  decoration: InputDecoration(labelText: "Gender"),
+                  // initialValue: 'Male',
+                  hint: Text('Select Gender'),
+                  validators: [FormBuilderValidators.required()],
+                  items: ['Male', 'Female', 'Other']
+                      .map((gender) => DropdownMenuItem(
+                      value: gender,
+                      child: Text("$gender")
+                  )).toList(),
+                ),
+                FormBuilderTextField(
+                  style: TextStyle(color: Colors.black),
+                  attribute: "age",
+                  decoration: InputDecoration(labelText: "Age"),
+                  validators: [
+                    FormBuilderValidators.numeric(),
+                    FormBuilderValidators.max(70),
                   ],
                 ),
-              ),
-            ),
-            Container(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                child: RaisedButton(
-                  onPressed: () {
-                    final form = _formKey.currentState;
-                    // Validate returns true if the form is valid, otherwise false.
-                    if (form.validate()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-
-                      form.save();
-                      _user.save();
-
-                      /*Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));*/
-                    }
-                  },
-                  child: Text('Submit'),
-                )
-            )
-          ],
-        ),
-      );
+                FormBuilderSegmentedControl(
+                  decoration: InputDecoration(labelText: "Movie Rating (Archer)"),
+                  attribute: "movie_rating",
+                  options: List.generate(5, (i) => i + 1)
+                      .map(
+                          (number) => FormBuilderFieldOption(value: number))
+                      .toList(),
+                ),
+                FormBuilderSwitch(
+                  label: Text(
+                      'I Accept the tems and conditions',
+                      style: TextStyle(color: Colors.black),
+                  ),
+                  attribute: "accept_terms_switch",
+                  initialValue: true,
+                ),
+                FormBuilderStepper(
+                  decoration: InputDecoration(labelText: "Stepper"),
+                  attribute: "stepper",
+                  initialValue: 10,
+                  step: 1,
+                ),
+                FormBuilderRate(
+                  decoration: InputDecoration(labelText: "Rate this form"),
+                  attribute: "rate",
+                  iconSize: 32.0,
+                  initialValue: 1,
+                  max: 5,
+                ),
+                FormBuilderCheckboxList(
+                  decoration: InputDecoration(
+                      labelText: "The language of my people",
+                      focusColor: Colors.black
+                  ),
+                  // activeColor: Colors.black,
+                  attribute: "languages",
+                  initialValue: ["Dart"],
+                  options: [
+                    FormBuilderFieldOption(value: "Dart"),
+                    FormBuilderFieldOption(value: "Kotlin"),
+                    FormBuilderFieldOption(value: "Java"),
+                    FormBuilderFieldOption(value: "Swift"),
+                    FormBuilderFieldOption(value: "Objective-C"),
+                  ],
+                ),
+                FormBuilderSignaturePad(
+                  decoration: InputDecoration(labelText: "Signature"),
+                  attribute: "signature",
+                  height: 100,
+                ),
+                Container(
+                    width: screenSize.width,
+                    margin: EdgeInsets.only(top: 20.0),
+                    child: new RaisedButton(
+                        color: Colors.blue,
+                        child: new Text(
+                          'Login',
+                          style: new TextStyle(color: Colors.white),
+                        ),
+                        onPressed: this.submit))
+              ]))),
+    );
+  }
 }
