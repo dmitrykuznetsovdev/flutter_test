@@ -22,6 +22,10 @@ class _FormsState extends State<FormsScreen> {
 
   void submit() {
     final form = _formKey.currentState;
+
+    print("form.validate()");
+    print(form.validate);
+    print("form.validate()");
     // Validate returns true if the form is valid, otherwise false.
     if (form.validate()) {
       // If the form is valid, display a snackbar. In the real world,
@@ -140,17 +144,20 @@ class _FormsState extends State<FormsScreen> {
                 FormBuilderCheckboxList(
                   decoration: InputDecoration(
                       labelText: "The language of my people",
-                      focusColor: Colors.black
+                      labelStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20
+                      )
                   ),
                   // activeColor: Colors.black,
                   attribute: "languages",
                   initialValue: ["Dart"],
                   options: [
-                    FormBuilderFieldOption(value: "Dart"),
-                    FormBuilderFieldOption(value: "Kotlin"),
-                    FormBuilderFieldOption(value: "Java"),
-                    FormBuilderFieldOption(value: "Swift"),
-                    FormBuilderFieldOption(value: "Objective-C"),
+                    FormBuilderFieldOption(value: 'Dart', child: Text("Dart", style: TextStyle(color: Colors.black))),
+                    FormBuilderFieldOption(value: 'Kotlin', child: Text("Kotlin", style: TextStyle(color: Colors.black))),
+                    FormBuilderFieldOption(value: 'Java', child: Text("Java", style: TextStyle(color: Colors.black))),
+                    FormBuilderFieldOption(value: 'Swift', child: Text("Swift", style: TextStyle(color: Colors.black))),
+                    FormBuilderFieldOption(value: 'Objective-C', child: Text("Objective-C", style: TextStyle(color: Colors.black))),
                   ],
                 ),
                 FormBuilderSignaturePad(
