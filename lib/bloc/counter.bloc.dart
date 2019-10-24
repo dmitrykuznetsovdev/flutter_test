@@ -1,21 +1,36 @@
 import 'package:bloc/bloc.dart';
 
-enum CounterEvent { increment, decrement }
+enum Events { increment, decrement }
 
-class CounterBloc extends Bloc<CounterEvent, int> {
+class CounterEvent {
+   static Map<String, dynamic> increment(int param) {
+    return {
+      "type": Events.increment,
+      "payload": param
+    };
+  }
+   static Map<String, dynamic> decrement(int param) {
+     return {
+       "type": Events.decrement,
+       "payload": param
+     };
+   }
+}
+
+class CounterBloc extends Bloc<Map<String, dynamic>, int> {
 
   @override
   // TODO: implement initialState
   int get initialState => 1;
 
   @override
-  Stream<int> mapEventToState(CounterEvent event) async* {
-    switch (event) {
-      case CounterEvent.decrement:
-        yield state - 1;
+  Stream<int> mapEventToState(Map<String, dynamic> event) async* {
+    switch (event["type"]) {
+      case Events.decrement:
+        yield state - event["payload"] as int;
         break;
-      case CounterEvent.increment:
-        yield state + 1;
+      case Events.increment:
+        yield state + event["payload"] as int;
         break;
     }
   }

@@ -92,7 +92,7 @@ class MyHomePage extends StatelessWidget {
             child: FloatingActionButton(
               child: Icon(Icons.add),
               onPressed: () {
-                counterBloc.add(CounterEvent.increment);
+                counterBloc.add(CounterEvent.increment(1));
               },
             ),
           ),
@@ -101,7 +101,7 @@ class MyHomePage extends StatelessWidget {
             child: FloatingActionButton(
               child: Icon(Icons.remove),
               onPressed: () {
-                counterBloc.add(CounterEvent.decrement);
+                counterBloc.add(CounterEvent.decrement(2));
               },
             ),
           ),
