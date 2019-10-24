@@ -13,29 +13,34 @@ class FormsScreen extends StatefulWidget {
 }
 
 class _FormsState extends State<FormsScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   final _user = User();
 
-  void onSavedFormField(String val, String fieldName) {
-    setState(() => _user.data[fieldName] = val);
+  void onSavedFormField(fields) {
+    // setState(() => _user.data[fieldName] = val);
+    print(fields);
   }
 
+  static const Map<String, String> FIELDS_NAME = {
+    "DATE": "date",
+    "SLIDER": "slider",
+    "ACCEPT_TERMS": "accept_terms",
+    "GENDER": "gender",
+    "AGE": "age",
+    "MOVIE_RATING": "movie_rating",
+    "ACCEPT_TERMS_SWITCH": "accept_terms_switch",
+    "STEPPER": "stepper",
+    "RATE": "rate",
+    "LANGUAGES": "languages",
+    "SIGNATURE": "signature",
+  };
+
   void submit() {
-    final form = _formKey.currentState;
-
-    print("form.validate()");
-    print(form.validate);
-    print("form.validate()");
-    // Validate returns true if the form is valid, otherwise false.
-    if (form.validate()) {
-      // If the form is valid, display a snackbar. In the real world,
-      // you'd often call a server or save the information in a database.
-
-      form.save();
-      _user.save();
-
-      Scaffold.of(context)
-          .showSnackBar(SnackBar(content: Text('Processing Data')));
+    if (_formKey.currentState.saveAndValidate()) {
+      print('VALID');
+      print(_formKey.currentState.value);
+    } else {
+      print('NOT VALID');
     }
   }
 
@@ -51,16 +56,13 @@ class _FormsState extends State<FormsScreen> {
           child: FormBuilder(
               key: _formKey,
               initialValue: {
-                'date': DateTime.now(),
-                'accept_terms': false,
-              },
-              onChanged: (fields) {
-                // print(fields);
+                '$FIELDS_NAME["DATE"]': DateTime.now(),
+                '$FIELDS_NAME["ACCEPT_TERMS"]': false,
               },
               autovalidate: true,
               child: ListView(children: <Widget>[
                 FormBuilderDateTimePicker(
-                  attribute: "date",
+                  attribute: FIELDS_NAME['DATE'],
                   style: TextStyle(color: Colors.black),
                   inputType: InputType.date,
                   format: DateFormat("yyyy-MM-dd"),
@@ -68,7 +70,7 @@ class _FormsState extends State<FormsScreen> {
                   InputDecoration(labelText: "Appointment Time"),
                 ),
                 FormBuilderSlider(
-                  attribute: "slider",
+                  attribute: FIELDS_NAME['SLIDER'],
                   validators: [FormBuilderValidators.min(6)],
                   min: 0.0,
                   max: 10.0,
@@ -78,7 +80,7 @@ class _FormsState extends State<FormsScreen> {
                   InputDecoration(labelText: "Number of things"),
                 ),
                 FormBuilderCheckbox(
-                  attribute: 'accept_terms',
+                  attribute: FIELDS_NAME['ACCEPT_TERMS'],
                   label: Text(
                       "I have read and agree to the terms and conditions",
                       style: TextStyle(color: Colors.black),
@@ -92,7 +94,7 @@ class _FormsState extends State<FormsScreen> {
                 ),
                 FormBuilderDropdown(
                   style: TextStyle(color: Colors.black),
-                  attribute: "gender",
+                  attribute: FIELDS_NAME['GENDER'],
                   decoration: InputDecoration(labelText: "Gender"),
                   // initialValue: 'Male',
                   hint: Text('Select Gender'),
@@ -105,7 +107,7 @@ class _FormsState extends State<FormsScreen> {
                 ),
                 FormBuilderTextField(
                   style: TextStyle(color: Colors.black),
-                  attribute: "age",
+                  attribute: FIELDS_NAME['AGE'],
                   decoration: InputDecoration(labelText: "Age"),
                   validators: [
                     FormBuilderValidators.numeric(),
@@ -114,7 +116,7 @@ class _FormsState extends State<FormsScreen> {
                 ),
                 FormBuilderSegmentedControl(
                   decoration: InputDecoration(labelText: "Movie Rating (Archer)"),
-                  attribute: "movie_rating",
+                  attribute: FIELDS_NAME['MOVIE_RATING'],
                   options: List.generate(5, (i) => i + 1)
                       .map(
                           (number) => FormBuilderFieldOption(value: number))
@@ -125,18 +127,18 @@ class _FormsState extends State<FormsScreen> {
                       'I Accept the tems and conditions',
                       style: TextStyle(color: Colors.black),
                   ),
-                  attribute: "accept_terms_switch",
+                  attribute: FIELDS_NAME['ACCEPT_TERMS_SWITCH'],
                   initialValue: true,
                 ),
                 FormBuilderStepper(
                   decoration: InputDecoration(labelText: "Stepper"),
-                  attribute: "stepper",
+                  attribute: FIELDS_NAME['STEPPER'],
                   initialValue: 10,
                   step: 1,
                 ),
                 FormBuilderRate(
                   decoration: InputDecoration(labelText: "Rate this form"),
-                  attribute: "rate",
+                  attribute: FIELDS_NAME['RATE'],
                   iconSize: 32.0,
                   initialValue: 1,
                   max: 5,
@@ -150,7 +152,7 @@ class _FormsState extends State<FormsScreen> {
                       )
                   ),
                   // activeColor: Colors.black,
-                  attribute: "languages",
+                  attribute: FIELDS_NAME['LANGUAGES'],
                   initialValue: ["Dart"],
                   options: [
                     FormBuilderFieldOption(value: 'Dart', child: Text("Dart", style: TextStyle(color: Colors.black))),
@@ -162,7 +164,7 @@ class _FormsState extends State<FormsScreen> {
                 ),
                 FormBuilderSignaturePad(
                   decoration: InputDecoration(labelText: "Signature"),
-                  attribute: "signature",
+                  attribute: FIELDS_NAME['SIGNATURE'],
                   height: 100,
                 ),
                 Container(

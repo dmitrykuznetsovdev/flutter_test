@@ -1,36 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_app/bloc/counter.bloc.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   List<Map> buttonList = [
     {
@@ -49,27 +23,32 @@ class _MyHomePageState extends State<MyHomePage> {
     fontSize: 20,
   );
 
-  Widget _text(String text) => Text(
-      text,
-      style: _textStyle
-  );
+  Widget _text(String text) => Text(text, style: _textStyle);
 
   @override
   Widget build(BuildContext context) {
+    final CounterBloc counterBloc = BlocProvider.of<CounterBloc>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        color: Colors.black12,
-        child: ListView(
-            children: <Widget>[
+        appBar: AppBar(
+          title: Text(this.title),
+        ),
+        body: BlocBuilder<CounterBloc, int>(builder: (context, count) {
+          return Container(
+            padding: EdgeInsets.all(10),
+            color: Colors.black12,
+            child: ListView(children: <Widget>[
               RaisedButton(
                 color: Colors.lightBlue,
-                child: this._text('Forms'),
+                child: this._text('FormBuilder'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/forms');
+                },
+              ),
+              RaisedButton(
+                color: Colors.lightBlue,
+                child: this._text('Native Forms'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/native_forms');
                 },
               ),
               RaisedButton(
@@ -78,8 +57,55 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Navigator.pushNamed(context, '/list');
                 },
-              )
+              ),
+              RaisedButton(
+                color: Colors.lightBlue,
+                child: this._text('LIGHT'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/list');
+                },
+              ),
+              RaisedButton(
+                color: Colors.lightBlue,
+                child: this._text('DARK'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/list');
+                },
+              ),
+              SizedBox(height: 80,),
+              Center(
+                child: Text(
+                  '$count',
+                  style: TextStyle(fontSize: 44.0, color: Colors.green),
+                ),
+              ),
             ]),
+          );
+        }
+        ),
+      floatingActionButton: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 5.0),
+            child: FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () {
+                counterBloc.add(CounterEvent.increment);
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 5.0),
+            child: FloatingActionButton(
+              child: Icon(Icons.remove),
+              onPressed: () {
+                counterBloc.add(CounterEvent.decrement);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
