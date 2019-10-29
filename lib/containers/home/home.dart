@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_app/bloc/counter.bloc.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_app/dal/counter/counter.dart';
+import 'package:flutter_app/dal/main_store.dart';
+import 'package:provider/provider.dart';
+
+final counter = Counter();
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -27,13 +31,16 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CounterBloc counterBloc = BlocProvider.of<CounterBloc>(context);
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(this.title),
-        ),
-        body: BlocBuilder<CounterBloc, int>(builder: (context, count) {
-          return Container(
+    // final storeSettings = Provider.of<Settings>(context);
+    // final storeCounter = Provider.of<Counter>(context);
+    final storeMain = Provider.of<MainStore>(context);
+
+    return Observer(
+        builder: (_) => Scaffold(
+          appBar: AppBar(
+            title: Text(this.title),
+          ),
+          body: Container(
             padding: EdgeInsets.all(10),
             color: Colors.black12,
             child: ListView(children: <Widget>[
@@ -62,51 +69,54 @@ class MyHomePage extends StatelessWidget {
                 color: Colors.lightBlue,
                 child: this._text('LIGHT'),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/list');
+                  storeMain.settings.toggleDarkModeUser(false);
                 },
               ),
               RaisedButton(
                 color: Colors.lightBlue,
                 child: this._text('DARK'),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/list');
+                  storeMain.settings.toggleDarkModeUser(true);
                 },
               ),
-              SizedBox(height: 80,),
+              SizedBox(
+                height: 80,
+              ),
               Center(
                 child: Text(
-                  '$count',
+                  '${storeMain.counter.value}',
                   style: TextStyle(fontSize: 44.0, color: Colors.green),
                 ),
               ),
+              Center(
+                child: Text(
+                  '${storeMain.settings.isDarkModeUser ? 'DARK' : 'LIGTH'}',
+                  style: TextStyle(fontSize: 44.0, color: Colors.green),
+                ),
+              )
             ]),
-          );
-        }
-        ),
-      floatingActionButton: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 5.0),
-            child: FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                counterBloc.add(CounterEvent.increment(1));
-              },
-            ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 5.0),
-            child: FloatingActionButton(
-              child: Icon(Icons.remove),
-              onPressed: () {
-                counterBloc.add(CounterEvent.decrement(2));
-              },
-            ),
+          floatingActionButton: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.0),
+                child: FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: storeMain.counter.increment,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.0),
+                child: FloatingActionButton(
+                  child: Icon(Icons.remove),
+                  onPressed: storeMain.counter.decrement,
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        )
     );
   }
 }

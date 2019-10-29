@@ -1,3 +1,4 @@
+/*
 import 'package:bloc/bloc.dart';
 
 class TransitionLogger extends BlocDelegate {
@@ -19,3 +20,4 @@ class TransitionLogger extends BlocDelegate {
     print('$error, $stacktrace');
   }
 }
+*/

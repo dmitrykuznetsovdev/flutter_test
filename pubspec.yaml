@@ -14,15 +14,18 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   image_picker: '^0.6.1'
   font_awesome_flutter: ^8.5.0
   url_launcher: ^5.0.0
   flutter_form_builder: ^3.5.5
-  bloc: 1.0.0
-  flutter_bloc: 1.0.0
+  mobx: ^0.3.9
+  provider: ^3.1.0+1
+  json_serializable:
+  shared_preferences:
+  flutter_mobx: ^0.3.3+1
   flutter:
     sdk: flutter
 
@@ -32,6 +35,9 @@ dependencies:
 
 dev_dependencies:
   sprintf: '^4.0.0'
+  mobx_codegen: ^0.3.9+1
+  build_runner: ^1.7.1
+  analyzer:
   flutter_test:
     sdk: flutter
 

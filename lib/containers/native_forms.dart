@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user.dart';
 import 'package:flutter_app/styles/forms.style.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_app/bloc/counter.bloc.dart';
 
 class NativeFormsScreen extends StatefulWidget {
   NativeFormsScreen({Key key, this.title}) : super(key: key);
@@ -49,7 +47,6 @@ class _FormsState extends State<NativeFormsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final CounterBloc _counterBloc = BlocProvider.of<CounterBloc>(context);
     return Scaffold(
       appBar: AppBar(
         // title: Text(_counterBloc),
