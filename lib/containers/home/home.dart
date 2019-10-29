@@ -102,15 +102,17 @@ class MyHomePage extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 5.0),
-                child: FloatingActionButton(
-                  child: Icon(Icons.add),
+                child: IconButton(
+                  icon: Icon(Icons.volume_up),
+                  tooltip: '+',
                   onPressed: storeMain.counter.increment,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 5.0),
-                child: FloatingActionButton(
-                  child: Icon(Icons.remove),
+                child: IconButton(
+                  icon: Icon(Icons.volume_down),
+                  tooltip: '-',
                   onPressed: storeMain.counter.decrement,
                 ),
               ),
