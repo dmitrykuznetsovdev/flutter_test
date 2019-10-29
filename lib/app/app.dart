@@ -3,23 +3,8 @@ import 'package:flutter_app/app/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_app/dal/main_store.dart';
+import 'package:flutter_app/styles/theme.style.dart';
 
-final theme = {
-  'ligth': ThemeData.light().copyWith(
-    brightness: Brightness.light,
-    primaryColor: Colors.lightBlue,
-    textTheme: TextTheme(
-      body1: TextStyle(color: Colors.lightBlue),
-    ),
-  ),
-  'dark': ThemeData.dark().copyWith(
-    brightness: Brightness.dark,
-    primaryColor: Colors.white,
-    textTheme: TextTheme(
-      body1: TextStyle(color: Colors.white),
-    ),
-  ),
-};
 
 class MyApp extends StatelessWidget {
   @override
