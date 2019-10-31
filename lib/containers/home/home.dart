@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_app/dal/counter/counter.dart';
 import 'package:flutter_app/dal/main_store.dart';
+import 'package:flutter_app/dal/router/constants.dart';
+import 'package:flutter_app/componets/app_bar/app_bar.dart';
 import 'package:provider/provider.dart';
 
 final counter = Counter();
@@ -34,12 +36,11 @@ class MyHomePage extends StatelessWidget {
     // final storeSettings = Provider.of<Settings>(context);
     // final storeCounter = Provider.of<Counter>(context);
     final storeMain = Provider.of<MainStore>(context);
+    final storeView = storeMain.viewStore;
 
     return Observer(
         builder: (_) => Scaffold(
-          appBar: AppBar(
-            title: Text(this.title),
-          ),
+          appBar: appBar(this.title, storeMain.router, false),
           body: Container(
             padding: EdgeInsets.all(10),
             color: Colors.black12,
@@ -48,35 +49,35 @@ class MyHomePage extends StatelessWidget {
                 color: Colors.lightBlue,
                 child: this._text('FormBuilder'),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/forms');
+                  storeMain.router.pushNamed(FormsRoute);
                 },
               ),
               RaisedButton(
                 color: Colors.lightBlue,
                 child: this._text('Native Forms'),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/native_forms');
+                  storeMain.router.pushNamed(NativeFormsRoute);
                 },
               ),
               RaisedButton(
                 color: Colors.lightBlue,
                 child: this._text('List'),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/list');
+                  storeMain.router.pushNamed(ListRoute);
                 },
               ),
               RaisedButton(
                 color: Colors.lightBlue,
                 child: this._text('LIGHT'),
                 onPressed: () {
-                  storeMain.settings.toggleDarkModeUser(false);
+                  storeMain.settingsStore.toggleDarkModeUser(false);
                 },
               ),
               RaisedButton(
                 color: Colors.lightBlue,
                 child: this._text('DARK'),
                 onPressed: () {
-                  storeMain.settings.toggleDarkModeUser(true);
+                  storeMain.settingsStore.toggleDarkModeUser(true);
                 },
               ),
               SizedBox(
@@ -84,13 +85,19 @@ class MyHomePage extends StatelessWidget {
               ),
               Center(
                 child: Text(
-                  '${storeMain.counter.value}',
+                  '${storeMain.counterStore.value}',
                   style: TextStyle(fontSize: 44.0, color: Colors.green),
                 ),
               ),
               Center(
                 child: Text(
-                  '${storeMain.settings.isDarkModeUser ? 'DARK' : 'LIGTH'}',
+                  '${storeMain.settingsStore.isDarkModeUser ? 'DARK' : 'LIGTH'}',
+                  style: TextStyle(fontSize: 44.0, color: Colors.green),
+                ),
+              ),
+              Center(
+                child: Text(
+                  '${storeView.nativeForms.getFullName}',
                   style: TextStyle(fontSize: 44.0, color: Colors.green),
                 ),
               )
@@ -105,7 +112,7 @@ class MyHomePage extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.volume_up),
                   tooltip: '+',
-                  onPressed: storeMain.counter.increment,
+                  onPressed: storeMain.counterStore.increment,
                 ),
               ),
               Padding(
@@ -113,7 +120,7 @@ class MyHomePage extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.volume_down),
                   tooltip: '-',
-                  onPressed: storeMain.counter.decrement,
+                  onPressed: storeMain.counterStore.decrement,
                 ),
               ),
             ],

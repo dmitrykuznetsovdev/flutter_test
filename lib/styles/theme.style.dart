@@ -10,7 +10,7 @@ final theme = {
   ),
   'dark': ThemeData.dark().copyWith(
     brightness: Brightness.dark,
-    primaryColor: Colors.white,
+    primaryColor: Colors.lightBlue,
     textTheme: TextTheme(
       body1: TextStyle(color: Colors.white),
     ),

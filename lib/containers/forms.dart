@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_app/dal/main_store.dart';
+import 'package:flutter_app/componets/app_bar/app_bar.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class FormsScreen extends StatefulWidget {
@@ -46,11 +49,11 @@ class _FormsState extends State<FormsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final storeMain = Provider.of<MainStore>(context);
     final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Form validation demo'),
-      ),
+      appBar: appBar('Form validation demo', storeMain.router),
       body: Container(
           padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
           child: FormBuilder(

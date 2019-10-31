@@ -1,13 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/dal/main_store.dart';
+import 'package:flutter_app/componets/app_bar/app_bar.dart';
+import 'package:provider/provider.dart';
 
 const double kColorItemHeight = 48.0;
 
 class ListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final storeMain = Provider.of<MainStore>(context);
+
     return Scaffold(
-        appBar: AppBar(title: Text("SECOND SCRREEN")),
+        appBar: appBar("list", storeMain.router),
         body: Scrollbar(child: _renderList(context)));
   }
 }

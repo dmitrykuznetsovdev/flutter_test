@@ -1,15 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/containers/list_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_app/dal/main_store.dart';
+import 'package:flutter_app/componets/app_bar/app_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ScreenArguments args = ModalRoute.of(context).settings.arguments;
+    final storeMain = Provider.of<MainStore>(context);
 
     return Scaffold(
-        appBar: AppBar(title: Text(args.title)),
+        appBar: appBar(args.title, storeMain.router),
         body: Container(
           width: double.infinity,
           child: args.message == '85 W Portal Ave' ? _card2(args, context) : _card(args)
