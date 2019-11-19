@@ -16,15 +16,13 @@ class MyApp extends StatelessWidget {
         ],
         child: Consumer<MainStore>(
             builder: (_, store, __) => Observer(
-                builder: (_) => Container(
-                    child: MaterialApp(
-                        title: 'Flutter Demo',
-                        navigatorKey: locator<NavigationService>().navigatorKey,
-                        theme: store.settingsStore.isDarkModeUser ? theme['dark']: theme['light'],
-                        debugShowCheckedModeBanner: false,
-                        initialRoute: "/",
-                        routes: routes(context)
-                    )
+                builder: (_) => MaterialApp(
+                    title: 'Flutter Demo',
+                    navigatorKey: locator<NavigationService>().navigatorKey,
+                    theme: store.settingsStore.isDarkModeUser ? theme['dark']: theme['light'],
+                    debugShowCheckedModeBanner: false,
+                    initialRoute: "/",
+                    routes: routes(context)
                 )
             )
         )

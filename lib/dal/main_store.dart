@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 import 'counter/counter.dart';
 import 'router/router.dart';
+import 'dialog/dialog.dart';
 import 'settings/settings.dart';
 import 'settings/preferences_service.dart';
 import 'package:flutter_app/containers/native_forms/store_view.dart';
@@ -22,6 +23,7 @@ abstract class _MainStore with Store {
 
   final router = RouterStore();
   final counterStore = Counter();
+  final dialogStore = DialogStore();
   final settingsStore = Settings(PreferencesService());
   final viewStore = _ViewStore();
   set transportLayer(p) => null;

@@ -5,6 +5,7 @@ import 'package:flutter_app/dal/main_store.dart';
 import 'package:flutter_app/dal/router/constants.dart';
 import 'package:flutter_app/componets/app_bar/app_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_app/componets/dialog/dialog_manager.dart';
 
 final counter = Counter();
 
@@ -40,7 +41,12 @@ class MyHomePage extends StatelessWidget {
 
     return Observer(
         builder: (_) => Scaffold(
-          appBar: appBar(this.title, storeMain.router, false),
+          appBar: AppBarComponent(
+              title: this.title,
+              router: storeMain.router,
+              isShowBack: false,
+              showDialogPopup: this._showDialog
+          ),
           body: Container(
             padding: EdgeInsets.all(10),
             color: Colors.black12,
@@ -122,10 +128,24 @@ class MyHomePage extends StatelessWidget {
                   tooltip: '-',
                   onPressed: storeMain.counterStore.decrement,
                 ),
-              ),
+              )
             ],
           ),
         )
     );
+  }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (_) => DialogManager(
+          image: Image.network(
+            "https://raw.githubusercontent.com/Shashank02051997/FancyGifDialog-Android/master/GIF's/gif14.gif",
+            fit: BoxFit.cover,
+          ),
+          title: 'title text',
+          description: 'description text',
+          buttonText: 'buttonText',
+        ));
   }
 }

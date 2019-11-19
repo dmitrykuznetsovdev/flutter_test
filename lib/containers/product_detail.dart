@@ -13,7 +13,10 @@ class ProductDetailScreen extends StatelessWidget {
     final storeMain = Provider.of<MainStore>(context);
 
     return Scaffold(
-        appBar: appBar(args.title, storeMain.router),
+        appBar: AppBarComponent(
+          title: args.title,
+          router: storeMain.router,
+        ),
         body: Container(
           width: double.infinity,
           child: args.message == '85 W Portal Ave' ? _card2(args, context) : _card(args)

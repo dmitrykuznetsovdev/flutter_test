@@ -13,5 +13,5 @@ Map<String, WidgetBuilder>  routes(BuildContext context) => <String, WidgetBuild
   ListRoute: (BuildContext context) => ListScreen(),
   DetailRoute: (BuildContext context) => ProductDetailScreen(),
   FormsRoute: (BuildContext context) => FormsScreen(),
-  NativeFormsRoute: (BuildContext context) => NativeFormsScreen(),
+  NativeFormsRoute: (BuildContext context) => NativeFormsScreen(title: 'NativeFormsScreen'),
 };

@@ -53,7 +53,10 @@ class _FormsState extends State<FormsScreen> {
     final Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: appBar('Form validation demo', storeMain.router),
+      appBar: AppBarComponent(
+        title: 'Form validation demo',
+        router: storeMain.router,
+      ),
       body: Container(
           padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
           child: FormBuilder(
@@ -69,8 +72,7 @@ class _FormsState extends State<FormsScreen> {
                   style: TextStyle(color: Colors.black),
                   inputType: InputType.date,
                   format: DateFormat("yyyy-MM-dd"),
-                  decoration:
-                  InputDecoration(labelText: "Appointment Time"),
+                  decoration: InputDecoration(labelText: "Appointment Time"),
                 ),
                 FormBuilderSlider(
                   attribute: FIELDS_NAME['SLIDER'],
@@ -79,19 +81,18 @@ class _FormsState extends State<FormsScreen> {
                   max: 10.0,
                   initialValue: 1.0,
                   divisions: 20,
-                  decoration:
-                  InputDecoration(labelText: "Number of things"),
+                  decoration: InputDecoration(labelText: "Number of things"),
                 ),
                 FormBuilderCheckbox(
                   attribute: FIELDS_NAME['ACCEPT_TERMS'],
                   label: Text(
-                      "I have read and agree to the terms and conditions",
-                      style: TextStyle(color: Colors.black),
+                    "I have read and agree to the terms and conditions",
+                    style: TextStyle(color: Colors.black),
                   ),
                   validators: [
                     FormBuilderValidators.requiredTrue(
                       errorText:
-                      "You must accept terms and conditions to continue",
+                          "You must accept terms and conditions to continue",
                     ),
                   ],
                 ),
@@ -104,9 +105,8 @@ class _FormsState extends State<FormsScreen> {
                   validators: [FormBuilderValidators.required()],
                   items: ['Male', 'Female', 'Other']
                       .map((gender) => DropdownMenuItem(
-                      value: gender,
-                      child: Text("$gender")
-                  )).toList(),
+                          value: gender, child: Text("$gender")))
+                      .toList(),
                 ),
                 FormBuilderTextField(
                   style: TextStyle(color: Colors.black),
@@ -118,17 +118,17 @@ class _FormsState extends State<FormsScreen> {
                   ],
                 ),
                 FormBuilderSegmentedControl(
-                  decoration: InputDecoration(labelText: "Movie Rating (Archer)"),
+                  decoration:
+                      InputDecoration(labelText: "Movie Rating (Archer)"),
                   attribute: FIELDS_NAME['MOVIE_RATING'],
                   options: List.generate(5, (i) => i + 1)
-                      .map(
-                          (number) => FormBuilderFieldOption(value: number))
+                      .map((number) => FormBuilderFieldOption(value: number))
                       .toList(),
                 ),
                 FormBuilderSwitch(
                   label: Text(
-                      'I Accept the tems and conditions',
-                      style: TextStyle(color: Colors.black),
+                    'I Accept the tems and conditions',
+                    style: TextStyle(color: Colors.black),
                   ),
                   attribute: FIELDS_NAME['ACCEPT_TERMS_SWITCH'],
                   initialValue: true,
@@ -149,20 +149,31 @@ class _FormsState extends State<FormsScreen> {
                 FormBuilderCheckboxList(
                   decoration: InputDecoration(
                       labelText: "The language of my people",
-                      labelStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20
-                      )
-                  ),
+                      labelStyle: TextStyle(color: Colors.black, fontSize: 20)),
                   // activeColor: Colors.black,
                   attribute: FIELDS_NAME['LANGUAGES'],
                   initialValue: ["Dart"],
                   options: [
-                    FormBuilderFieldOption(value: 'Dart', child: Text("Dart", style: TextStyle(color: Colors.black))),
-                    FormBuilderFieldOption(value: 'Kotlin', child: Text("Kotlin", style: TextStyle(color: Colors.black))),
-                    FormBuilderFieldOption(value: 'Java', child: Text("Java", style: TextStyle(color: Colors.black))),
-                    FormBuilderFieldOption(value: 'Swift', child: Text("Swift", style: TextStyle(color: Colors.black))),
-                    FormBuilderFieldOption(value: 'Objective-C', child: Text("Objective-C", style: TextStyle(color: Colors.black))),
+                    FormBuilderFieldOption(
+                        value: 'Dart',
+                        child: Text("Dart",
+                            style: TextStyle(color: Colors.black))),
+                    FormBuilderFieldOption(
+                        value: 'Kotlin',
+                        child: Text("Kotlin",
+                            style: TextStyle(color: Colors.black))),
+                    FormBuilderFieldOption(
+                        value: 'Java',
+                        child: Text("Java",
+                            style: TextStyle(color: Colors.black))),
+                    FormBuilderFieldOption(
+                        value: 'Swift',
+                        child: Text("Swift",
+                            style: TextStyle(color: Colors.black))),
+                    FormBuilderFieldOption(
+                        value: 'Objective-C',
+                        child: Text("Objective-C",
+                            style: TextStyle(color: Colors.black))),
                   ],
                 ),
                 FormBuilderSignaturePad(

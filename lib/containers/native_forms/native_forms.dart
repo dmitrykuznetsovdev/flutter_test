@@ -24,7 +24,10 @@ class _FormsState extends State<NativeFormsScreen> {
 
     return Observer(
         builder: (_) => Scaffold(
-            appBar: appBar('${storeView.nativeForms.getFullName}', storeMain.router),
+            appBar: AppBarComponent(
+                title: widget.title,
+                router: storeMain.router,
+            ),
             body: Container(
                 padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
                 child: Form(

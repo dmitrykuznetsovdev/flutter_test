@@ -15,6 +15,6 @@ class NavigationService {
   }
 }
 
-void setupLocator() {
+void setupRouterLocator() {
   locator.registerLazySingleton(() => NavigationService());
 }

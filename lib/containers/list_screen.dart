@@ -12,7 +12,10 @@ class ListScreen extends StatelessWidget {
     final storeMain = Provider.of<MainStore>(context);
 
     return Scaffold(
-        appBar: appBar("list", storeMain.router),
+        appBar: AppBarComponent(
+          title: 'List',
+          router: storeMain.router,
+        ),
         body: Scrollbar(child: _renderList(context)));
   }
 }
